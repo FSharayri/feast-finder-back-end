@@ -2,6 +2,10 @@ import { Router } from 'express'
 import { decodeUserFromToken, checkAuth } from '../middleware/auth.js'
 import * as authCtrl from '../controllers/auth.js'
 
+//test HELLO 
+
+
+
 const router = Router()
 
 /*---------- Public Routes ----------*/
