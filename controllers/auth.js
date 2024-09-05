@@ -1,6 +1,7 @@
 import jwt from 'jsonwebtoken'
 import { User } from '../models/user.js'
 import { Profile } from '../models/profile.js'
+// test
 
 async function signup(req, res) {
   try {
