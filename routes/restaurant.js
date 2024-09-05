@@ -5,11 +5,13 @@ import * as restaurantsCtrl from '../controllers/restaurants.js'
 const router = Router()
 
 /*---------- Public Routes ----------*/
-//api/restaurants
+//GET api/restaurants
 router.get('/', restaurantsCtrl.index)
 
 /*---------- Protected Routes ----------*/
 router.use(decodeUserFromToken)
+// POST api/restaurants
+router.post('/', checkAuth, restaurantsCtrl.create)
 
 
 
