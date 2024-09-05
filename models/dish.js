@@ -36,4 +36,4 @@ const dishSchema = new Schema({
 
 const Dish = mongoose.model('Dish', dishSchema)
 
-export { Profile }
+export { Dish }
