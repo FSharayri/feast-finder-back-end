@@ -19,6 +19,9 @@ router.post('/', checkAuth, dishesCtrl.create)
 router.put('/:dishId', checkAuth, dishesCtrl.update)
 // DELETE api/dishes/:dishId
 router.delete('/:dishId', checkAuth, dishesCtrl.delete)
+// POST localhost:3001/api/restaurants/:dishId/reviews
+router.post('/:dishId/reviews', checkAuth, dishesCtrl.createReview)
+
 
 
 

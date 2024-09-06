@@ -38,7 +38,6 @@ async function show(req, res) {
   }
 }
 
-
 async function update(req, res) {
   try {
     const dish = await Dish.findByIdAndUpdate(req.params.dishId, req.body, {new: true}).populate()
@@ -59,12 +58,26 @@ async function deleteDish(req, res){
   }
 }
 
-
+async function createReview(req, res) {
+  try {
+    req.body.owner = req.user.profile 
+    const dish = await Dish.findById(req.params.dishId)
+    dish.reviews.push(req.body)
+    await dish.save()
+    const newReview = dish.reviews.at(-1)
+    const profile = await Profile.findById(req.user.profile)
+    newReview.owner = profile
+    res.status(201).json(newReview)
+  } catch (error) {
+    res.status(500).json(error)
+  }
+}
 
 export {
   create,
   update,
   index,
   show,
-  deleteDish as delete
+  deleteDish as delete,
+  createReview 
 }
