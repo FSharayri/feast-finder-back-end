@@ -17,6 +17,9 @@ router.use(decodeUserFromToken)
 router.post('/', checkAuth, restaurantsCtrl.create)
 // PUT api/restaurants/:restaurantId
 router.put('/:restaurantId', checkAuth, restaurantsCtrl.update)
+// DELETE api/restaurants/:restaurantId
+router.delete('/:restaurantId', checkAuth, restaurantsCtrl.delete )
+
 
 
 export { router }
