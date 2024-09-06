@@ -7,7 +7,7 @@ const router = Router()
 /*---------- Public Routes ----------*/
 //GET api/restaurants
 router.get('/', restaurantsCtrl.index)
-// GET api/restaurants/restaurantId
+// GET api/restaurants/:restaurantId
 router.get('/:restaurantId', restaurantsCtrl.show)
 
 
@@ -15,7 +15,8 @@ router.get('/:restaurantId', restaurantsCtrl.show)
 router.use(decodeUserFromToken)
 // POST api/restaurants
 router.post('/', checkAuth, restaurantsCtrl.create)
-
+// PUT api/restaurants/:restaurantId
+router.put('/:restaurantId', checkAuth, restaurantsCtrl.update)
 
 
 export { router }
