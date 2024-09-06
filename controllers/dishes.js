@@ -19,8 +19,20 @@ async function create(req, res) {
 }
 
 
+async function update(req, res) {
+  try {
+    const dish = await Dish.findByIdAndUpdate(req.params.dishId, req.body, {new: true}).populate()
+    res.status(200).json(dish)
+  } catch (error) {
+    console.log(error)
+    res.status(500).json(error)
+  }
+}
+
+
+
 export {
   create,
-  
+  update,
   
 }
