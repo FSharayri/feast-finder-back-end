@@ -7,6 +7,9 @@ const router = Router()
 /*---------- Public Routes ----------*/
 //GET api/restaurants
 router.get('/', restaurantsCtrl.index)
+// GET api/restaurants/restaurantId
+router.get('/:restaurantId', restaurantsCtrl.show)
+
 
 /*---------- Protected Routes ----------*/
 router.use(decodeUserFromToken)
