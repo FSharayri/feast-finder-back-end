@@ -9,6 +9,8 @@ const router = Router()
 // router.get('/', dishesCtrl.index)
 // GET api/dishes/:dishId
 // router.get('/:dishId', dishesCtrl.show)
+//GET api/dishes
+router.get('/', dishesCtrl.index)
 
 
 /*---------- Protected Routes ----------*/
