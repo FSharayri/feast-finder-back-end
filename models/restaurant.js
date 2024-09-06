@@ -1,5 +1,7 @@
 //this is the model for restaurant
 
+import { Profile } from './profile.js'
+import {Dish} from './dish.js'
 import mongoose from 'mongoose'
 
 const Schema = mongoose.Schema
@@ -20,7 +22,7 @@ const restaurantSchema = new Schema({
   },
   owner: { 
     type: Schema.Types.ObjectId, 
-    ref: 'Profile' 
+    ref: 'Profile'
   },
   logo: String,
   zipcode: Number
