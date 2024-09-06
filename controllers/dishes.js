@@ -73,11 +73,27 @@ async function createReview(req, res) {
   }
 }
 
+async function updateReview(req, res) {
+  try {
+    const dish = await Dish.findById(req.params.dishId) 
+    const review = dish.reviews.id(req.params.reviewId)
+    review.rating = req.body.rating    
+    review.comment = req.body.comment
+    review.photo = req.body.photo
+    await dish.save()
+    res.status(200).json(dish)
+  } catch (error) {
+    console.log(error)
+    res.status(500).json(error)
+  }
+}
+
 export {
   create,
   update,
   index,
   show,
   deleteDish as delete,
-  createReview 
+  createReview,
+  updateReview,
 }
