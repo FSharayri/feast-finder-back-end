@@ -11,7 +11,7 @@ const restaurantSchema = new Schema({
   },
   dishes:[{ 
     type: Schema.Types.ObjectId, 
-    ref: 'dish' 
+    ref: 'Dish' 
   }],
   cuisine:{
     type: String,
