@@ -3,13 +3,13 @@ import { v2 as cloudinary } from 'cloudinary'
 import { Restaurant } from '../models/restaurant.js'
 
 async function create(req, res) {
-  try {
-    req.body.owner = req.user.Profile
+  try { 
+    req.body.owner = req.user.profile
     const restaurant = await Restaurant.create(req.body)
     const profile = await Profile.findById(req.user.profile)
     profile.restaurant = restaurant
     await profile.save()
-    restaurant.owner = profile
+    restaurant.owner = profile._id
     res.status(201).json(restaurant)
   } catch (error) {
     console.log(error)

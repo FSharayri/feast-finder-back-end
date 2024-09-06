@@ -6,7 +6,7 @@ const reviewSchema = new Schema({
   owner: { type: Schema.Types.ObjectId, ref: 'Profile' },
   comment: String,
   rating: {
-    type: number,
+    type: Number,
     required: true
   },
   photo: String
