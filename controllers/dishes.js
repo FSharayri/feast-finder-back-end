@@ -87,6 +87,16 @@ async function updateReview(req, res) {
     res.status(500).json(error)
   }
 }
+async function deleteReview(req,res){
+	try{
+    const dish = await Dish.findById(req.params.dishId)
+    dish.reviews.remove({_id : req.params.reviewId})
+    await dish.save()
+    res.status(200).json(dish) 
+	}catch(error){
+		res.status(500).json(error)
+	}
+}
 
 export {
   create,
@@ -96,4 +106,5 @@ export {
   deleteDish as delete,
   createReview,
   updateReview,
+  deleteReview,
 }
