@@ -49,11 +49,22 @@ async function update(req, res) {
   }
 }
 
+async function deleteDish(req, res){
+  try{
+    const dish = await Dish.findByIdAndDelete(req.params.dishId)
+    res.status(200).json(dish)
+  }catch(error){
+    console.log(error)
+    res.status(500).json(error)
+  }
+}
+
 
 
 export {
   create,
   update,
   index,
-  show
+  show,
+  deleteDish as delete
 }

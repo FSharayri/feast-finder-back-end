@@ -18,7 +18,7 @@ router.post('/', checkAuth, dishesCtrl.create)
 // PUT api/dishes/:dishId
 router.put('/:dishId', checkAuth, dishesCtrl.update)
 // DELETE api/dishes/:dishId
-// router.delete('/:dishId', checkAuth, dishesCtrl.delete)
+router.delete('/:dishId', checkAuth, dishesCtrl.delete)
 
 
 
