@@ -27,8 +27,30 @@ async function index(req, res) {
   }
 }
 
+async function show(req, res) {
+  try {
+    const restaurant = await Restaurant.findById(req.params.restaurantId).populate()
+    res.status(200).json(restaurant)
+  } catch (error) {
+    console.log(error)
+    res.status(500).json(error)
+  }
+}
+
+async function update(req, res) {
+  try {
+    const restaurant = await Restaurant.findByIdAndUpdate(req.params.restaurantId, req.body, {new: true}).populate()
+    res.status(200).json(restaurant)
+  } catch (error) {
+    console.log(error)
+    res.status(500).json(error)
+  }
+}
+
 export {
   index,
   create,
-  
+  show,
+  update,
+
 }
