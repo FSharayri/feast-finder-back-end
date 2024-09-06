@@ -6,11 +6,9 @@ const router = Router()
 
 /*---------- Public Routes ----------*/
 //GET api/dishes
-// router.get('/', dishesCtrl.index)
-// GET api/dishes/:dishId
-// router.get('/:dishId', dishesCtrl.show)
-//GET api/dishes
 router.get('/', dishesCtrl.index)
+// GET api/dishes/:dishId
+router.get('/:dishId', dishesCtrl.show)
 
 
 /*---------- Protected Routes ----------*/

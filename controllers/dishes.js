@@ -28,6 +28,16 @@ async function create(req, res) {
   }
 }
 
+async function show(req, res) {
+  try {
+    const dish = await Dish.findById(req.params.dishId).populate()
+    res.status(200).json(dish)
+  } catch (error) {
+    console.log(error)
+    res.status(500).json(error)
+  }
+}
+
 
 async function update(req, res) {
   try {
@@ -44,5 +54,6 @@ async function update(req, res) {
 export {
   create,
   update,
-  index
+  index,
+  show
 }
