@@ -97,6 +97,8 @@ async function updateReview(req, res) {
       review.photo = req.body.photo
       await dish.save()
       res.status(200).json(dish)
+    }else{
+      res.status(401).json({ err: "You are not the owner of this review" })
     }
   } catch (error) {
     console.log(error)
@@ -106,9 +108,14 @@ async function updateReview(req, res) {
 async function deleteReview(req,res){
 	try{
     const dish = await Dish.findById(req.params.dishId)
-    dish.reviews.remove({_id : req.params.reviewId})
-    await dish.save()
-    res.status(200).json(dish) 
+    const review = dish.reviews.id(req.params.reviewId)
+    if (review.owner._id.equals(req.user.profile)){
+      dish.reviews.remove({_id : req.params.reviewId})
+      await dish.save()
+      res.status(200).json(dish) 
+    }else{
+      res.status(401).json({ err: "You are not the owner of this dish" })
+    }
 	}catch(error){
 		res.status(500).json(error)
 	}
