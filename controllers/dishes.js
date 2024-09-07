@@ -16,12 +16,16 @@ async function index(req, res) {
 async function create(req, res) {
   try { 
     req.body.owner = req.user.profile
-    
-    const dish = await Dish.create(req.body)
     const profile = await Profile.findById(req.user.profile)
-    
-    dish.owner = profile
-    res.status(201).json(dish)
+    if (profile.isRestaurant){
+      // TODO make sure body has a restaurant in it
+      const dish = await Dish.create(req.body)
+      const profile = await Profile.findById(req.user.profile)
+      dish.owner = profile
+      res.status(201).json(dish)
+    }else {
+      res.status(401).json({ err: "This Profile is not a restaurant profile" })
+    }
   } catch (error) {
     console.log(error)
     res.json(error)
@@ -40,8 +44,13 @@ async function show(req, res) {
 
 async function update(req, res) {
   try {
-    const dish = await Dish.findByIdAndUpdate(req.params.dishId, req.body, {new: true}).populate()
-    res.status(200).json(dish)
+    const dish = await Dish.findById(req.params.dishId)
+    if(dish.owner._id.equals(req.user.profile)){
+      const updatedDish = await Dish.findByIdAndUpdate(req.params.dishId, req.body, {new: true}).populate()
+      res.status(200).json(updatedDish)
+    } else{
+      res.status(401).json({ err: "You are not the owner of this dish" })
+    }
   } catch (error) {
     console.log(error)
     res.status(500).json(error)
@@ -50,8 +59,13 @@ async function update(req, res) {
 
 async function deleteDish(req, res){
   try{
-    const dish = await Dish.findByIdAndDelete(req.params.dishId)
-    res.status(200).json(dish)
+    const dish = await Dish.findById(req.params.dishId)
+    if(dish.owner._id.equals(req.user.profile)){
+      const deletedDish = await Dish.findByIdAndDelete(req.params.dishId)
+      res.status(200).json(deletedDish)
+    }else{
+      res.status(401).json({ err: "You are not the owner of this dish" })
+    }
   }catch(error){
     console.log(error)
     res.status(500).json(error)
