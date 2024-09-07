@@ -46,7 +46,7 @@ async function update(req, res) {
   try {
     const dish = await Dish.findById(req.params.dishId)
     if(dish.owner._id.equals(req.user.profile)){
-      const updatedDish = await Dish.findByIdAndUpdate(req.params.dishId, req.body, {new: true}).populate()
+      const updatedDish = await Dish.findByIdAndUpdate(req.params.dishId, req.body, {new: true}).populate(['owner','reviews.owner'])
       res.status(200).json(updatedDish)
     } else{
       res.status(401).json({ err: "You are not the owner of this dish" })
@@ -114,7 +114,7 @@ async function deleteReview(req,res){
       await dish.save()
       res.status(200).json(dish) 
     }else{
-      res.status(401).json({ err: "You are not the owner of this dish" })
+      res.status(401).json({ err: "You are not the owner of this review" })
     }
 	}catch(error){
 		res.status(500).json(error)
