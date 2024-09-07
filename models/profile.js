@@ -9,11 +9,11 @@ const profileSchema = new Schema({
   },
   photo: String,
   isRestaurant: Boolean,
-  restaurant: { 
+  restaurant: [{ 
     type: Schema.Types.ObjectId, 
     ref: 'Restaurant',
     default: null,
-  },
+  }],
   dishesReviewed: [{ 
     type: Schema.Types.ObjectId, 
     ref: 'Dish' 
