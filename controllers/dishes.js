@@ -34,7 +34,7 @@ async function create(req, res) {
 
 async function show(req, res) {
   try {
-    const dish = await Dish.findById(req.params.dishId).populate(['owner','reviews.owner'])
+    const dish = await Dish.findById(req.params.dishId).populate(['restaurant','owner','reviews.owner'])
     res.status(200).json(dish)
   } catch (error) {
     console.log(error)
@@ -46,7 +46,7 @@ async function update(req, res) {
   try {
     const dish = await Dish.findById(req.params.dishId)
     if(dish.owner._id.equals(req.user.profile)){
-      const updatedDish = await Dish.findByIdAndUpdate(req.params.dishId, req.body, {new: true}).populate(['owner','reviews.owner'])
+      const updatedDish = await Dish.findByIdAndUpdate(req.params.dishId, req.body, {new: true}).populate(['restaurant','owner','reviews.owner'])
       res.status(200).json(updatedDish)
     } else{
       res.status(401).json({ err: "You are not the owner of this dish" })

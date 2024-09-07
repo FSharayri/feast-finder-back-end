@@ -24,6 +24,14 @@ const restaurantSchema = new Schema({
     type: Schema.Types.ObjectId, 
     ref: 'Profile'
   },
+  license: {
+    type:Number,
+    required:true
+  },
+  licenseState:  {
+    type:String,
+    required:true
+  },
   logo: String,
   zipcode: Number
 },{
