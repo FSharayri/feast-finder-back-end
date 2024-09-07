@@ -4,13 +4,17 @@ import { Restaurant } from '../models/restaurant.js'
 
 async function create(req, res) {
   try { 
-    req.body.owner = req.user.profile
-    const restaurant = await Restaurant.create(req.body)
     const profile = await Profile.findById(req.user.profile)
-    profile.restaurant = restaurant
-    await profile.save()
-    restaurant.owner = profile._id
-    res.status(201).json(restaurant)
+    if (profile.isRestaurant){
+      req.body.owner = req.user.profile
+      const restaurant = await Restaurant.create(req.body)
+      profile.restaurant = restaurant
+      await profile.save()
+      restaurant.owner = profile._id
+      res.status(201).json(restaurant)
+    }else {
+      res.status(401).json({ err: "This Profile is not a restaurant profile" })
+    }
   } catch (error) {
     console.log(error)
     res.json(error)
