@@ -8,7 +8,10 @@ const profileSchema = new Schema({
     required: true
   },
   photo: String,
-  isRestaurant: Boolean,
+  isRestaurant: {
+    type: Boolean,
+    default: false,
+  },
   restaurant: [{ 
     type: Schema.Types.ObjectId, 
     ref: 'Restaurant',
@@ -18,6 +21,7 @@ const profileSchema = new Schema({
     type: Schema.Types.ObjectId, 
     ref: 'Dish' 
   }],
+  
 },{
   timestamps: true,
 })

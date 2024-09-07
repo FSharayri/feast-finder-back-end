@@ -21,6 +21,7 @@ async function create(req, res) {
   }
 }
 
+
 async function index(req, res) {
   try {
     const restaurants = await Restaurant.find({}).populate(['dishes', 'owner']).sort({createdAt:'desc'})
