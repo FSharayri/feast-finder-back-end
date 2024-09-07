@@ -59,13 +59,17 @@ async function update(req, res) {
 
 async function deleteRestaurant(req, res){
   try{
-    const restaurant = await Restaurant.findByIdAndDelete(req.params.restaurantId)
-    const profile = await Profile.findById(req.user.profile)
-    console.log(profile.restaurant)
-    // profile.restaurant.remove({_id: req.params.restaurantId}) // TODO delete restaurant's dishes
-    profile.restaurant = null
-    await profile.save()
-    res.status(200).json(restaurant)
+    const restaurant = await Restaurant.findById(req.params.restaurantId)
+    if (restaurant.owner._id.equals(req.user.profile)){
+      await Restaurant.findByIdAndDelete(req.params.restaurantId)
+      const profile = await Profile.findById(req.user.profile)
+      profile.restaurant = null
+      // TODO delete restaurant's dishes
+      await profile.save()
+      res.status(200).json(restaurant)
+    }else{
+      res.status(401).json({ err: "You are not the owner of this restaurant" })
+    }
   }catch(error){
     console.log(error)
     res.status(500).json(error)
