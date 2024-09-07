@@ -34,7 +34,7 @@ async function create(req, res) {
 
 async function show(req, res) {
   try {
-    const dish = await Dish.findById(req.params.dishId).populate()
+    const dish = await Dish.findById(req.params.dishId).populate(['owner','reviews.owner'])
     res.status(200).json(dish)
   } catch (error) {
     console.log(error)
