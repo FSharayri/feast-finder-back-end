@@ -32,7 +32,7 @@ const restaurantSchema = new Schema({
     type:String,
     required:true
   },
-  logo: String,
+  photo: String,
   zipcode: Number
 },{
   timestamps: true,
