@@ -1,6 +1,7 @@
 import { Profile } from '../models/profile.js'
 import { v2 as cloudinary } from 'cloudinary'
 import { Restaurant } from '../models/restaurant.js'
+import {Dish} from '../models/dish.js'
 
 async function create(req, res) {
   try { 
@@ -34,7 +35,12 @@ async function index(req, res) {
 
 async function show(req, res) {
   try {
-    const restaurant = await Restaurant.findById(req.params.restaurantId).populate(['dishes', 'owner'])
+    const dishes = await Dish.find({})
+    const restaurantDishes= dishes.filter(dish=> dish.restaurant?.equals(req.params.restaurantId))
+    req.body = {
+      dishes: restaurantDishes
+    }
+    const restaurant = await Restaurant.findByIdAndUpdate(req.params.restaurantId,req.body,{new: true}).populate(['dishes', 'owner'])
     res.status(200).json(restaurant)
   } catch (error) {
     console.log(error)
