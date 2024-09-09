@@ -34,7 +34,7 @@ async function index(req, res) {
 
 async function show(req, res) {
   try {
-    const restaurant = await Restaurant.findById(req.params.restaurantId).populate()
+    const restaurant = await Restaurant.findById(req.params.restaurantId).populate(['dishes', 'owner'])
     res.status(200).json(restaurant)
   } catch (error) {
     console.log(error)
