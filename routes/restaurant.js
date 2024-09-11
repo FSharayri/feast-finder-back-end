@@ -20,6 +20,7 @@ router.put('/:restaurantId', checkAuth, restaurantsCtrl.update)
 // DELETE api/restaurants/:restaurantId
 router.delete('/:restaurantId', checkAuth, restaurantsCtrl.delete )
 
+router.put('/:restaurantId/add-photo', checkAuth, restaurantsCtrl.addPhoto)
 
 
 export { router }
