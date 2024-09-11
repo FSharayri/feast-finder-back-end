@@ -83,10 +83,30 @@ async function deleteRestaurant(req, res){
   }
 }
 
+async function addPhoto(req, res) {
+  try {
+    const imageFile = req.files.photo.path
+    const restaurant = await Restaurant.findById(req.params.restaurantId)
+
+    const image = await cloudinary.uploader.upload(
+      imageFile, 
+      { tags: `${req.params.restaurantId}` }
+    )
+    restaurant.photo = image.url
+    
+    await restaurant.save()
+    res.status(201).json(restaurant.photo)
+  } catch (err) {
+    console.log(err)
+    res.status(500).json(err)
+  }
+}
+
 export {
   index,
   create,
   show,
   update,
   deleteRestaurant as delete,
+  addPhoto
 }
