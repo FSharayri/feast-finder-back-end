@@ -22,8 +22,5 @@ router.delete('/:restaurantId', checkAuth, restaurantsCtrl.delete )
 
 router.put('/:restaurantId/add-photo', checkAuth, restaurantsCtrl.addPhoto)
 
-router.put('/:restaurantId/add-photo', checkAuth, restaurantsCtrl.addPhoto)
-
-
 
 export { router }
