@@ -120,6 +120,24 @@ async function deleteReview(req,res){
 		res.status(500).json(error)
 	}
 }
+async function addDishPhoto(req, res) {
+  try {
+    const imageFile = req.files.photo.path
+    const dish = await Dish.findById(req.params.dishId)
+
+    const image = await cloudinary.uploader.upload(
+      imageFile, 
+      { tags: `${req.params.dishId}` }
+    )
+    dish.photo = image.url
+    
+    await dish.save()
+    res.status(201).json(dish.photo)
+  } catch (err) {
+    console.log(err)
+    res.status(500).json(err)
+  }
+}
 
 export {
   create,
@@ -130,4 +148,5 @@ export {
   createReview,
   updateReview,
   deleteReview,
+  addDishPhoto,
 }
