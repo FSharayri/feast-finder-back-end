@@ -1,4 +1,4 @@
-import mongoose, { SchemaType } from 'mongoose'
+import mongoose from 'mongoose'
 
 const Schema = mongoose.Schema
 
@@ -21,7 +21,6 @@ const profileSchema = new Schema({
     type: Schema.Types.ObjectId, 
     ref: 'Dish' 
   }],
-  
 },{
   timestamps: true,
 })

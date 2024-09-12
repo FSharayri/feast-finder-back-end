@@ -1,15 +1,14 @@
 import { Profile } from '../models/profile.js'
 import { v2 as cloudinary } from 'cloudinary'
-import { Restaurant } from '../models/restaurant.js'
 import { Dish } from '../models/dish.js'
 
 async function index(req, res) {
   try {
     const dishes = await Dish.find({}).populate(['restaurant', 'owner']).sort({createdAt:'desc'})
     res.status(200).json(dishes)
-  } catch (error) {
-    console.log(error)
-    res.status(500).json(error)
+  } catch (err) {
+    console.log(err)
+    res.status(500).json(err)
   }
 }
 
@@ -18,7 +17,6 @@ async function create(req, res) {
     req.body.owner = req.user.profile
     const profile = await Profile.findById(req.user.profile)
     if (profile.isRestaurant){
-      // TODO make sure body has a restaurant in it
       const dish = await Dish.create(req.body)
       const profile = await Profile.findById(req.user.profile)
       dish.owner = profile
@@ -26,9 +24,9 @@ async function create(req, res) {
     }else {
       res.status(401).json({ err: "This Profile is not a restaurant profile" })
     }
-  } catch (error) {
-    console.log(error)
-    res.json(error)
+  } catch (err) {
+    console.log(err)
+    res.json(err)
   }
 }
 
@@ -36,9 +34,9 @@ async function show(req, res) {
   try {
     const dish = await Dish.findById(req.params.dishId).populate(['restaurant','owner','reviews.owner'])
     res.status(200).json(dish)
-  } catch (error) {
-    console.log(error)
-    res.status(500).json(error)
+  } catch (err) {
+    console.log(err)
+    res.status(500).json(err)
   }
 }
 
@@ -51,9 +49,9 @@ async function update(req, res) {
     } else{
       res.status(401).json({ err: "You are not the owner of this dish" })
     }
-  } catch (error) {
-    console.log(error)
-    res.status(500).json(error)
+  } catch (err) {
+    console.log(err)
+    res.status(500).json(err)
   }
 }
 
@@ -66,9 +64,9 @@ async function deleteDish(req, res){
     }else{
       res.status(401).json({ err: "You are not the owner of this dish" })
     }
-  }catch(error){
-    console.log(error)
-    res.status(500).json(error)
+  }catch(err){
+    console.log(err)
+    res.status(500).json(err)
   }
 }
 
@@ -82,8 +80,8 @@ async function createReview(req, res) {
     const profile = await Profile.findById(req.user.profile)
     newReview.owner = profile
     res.status(201).json(newReview)
-  } catch (error) {
-    res.status(500).json(error)
+  } catch (err) {
+    res.status(500).json(err)
   }
 }
 
@@ -100,11 +98,12 @@ async function updateReview(req, res) {
     }else{
       res.status(401).json({ err: "You are not the owner of this review" })
     }
-  } catch (error) {
-    console.log(error)
-    res.status(500).json(error)
+  } catch (err) {
+    console.log(err)
+    res.status(500).json(err)
   }
 }
+
 async function deleteReview(req,res){
 	try{
     const dish = await Dish.findById(req.params.dishId)
@@ -116,10 +115,11 @@ async function deleteReview(req,res){
     }else{
       res.status(401).json({ err: "You are not the owner of this review" })
     }
-	}catch(error){
-		res.status(500).json(error)
+	}catch(err){
+		res.status(500).json(err)
 	}
 }
+
 async function addDishPhoto(req, res) {
   try {
     const imageFile = req.files.photo.path

@@ -10,7 +10,6 @@ router.get('/', restaurantsCtrl.index)
 // GET api/restaurants/:restaurantId
 router.get('/:restaurantId', restaurantsCtrl.show)
 
-
 /*---------- Protected Routes ----------*/
 router.use(decodeUserFromToken)
 // POST api/restaurants
@@ -19,8 +18,7 @@ router.post('/', checkAuth, restaurantsCtrl.create)
 router.put('/:restaurantId', checkAuth, restaurantsCtrl.update)
 // DELETE api/restaurants/:restaurantId
 router.delete('/:restaurantId', checkAuth, restaurantsCtrl.delete )
-
+// PUT api/restaurants/:restaurantId/add-photo
 router.put('/:restaurantId/add-photo', checkAuth, restaurantsCtrl.addPhoto)
-
 
 export { router }

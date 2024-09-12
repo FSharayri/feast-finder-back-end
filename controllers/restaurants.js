@@ -16,20 +16,19 @@ async function create(req, res) {
     }else {
       res.status(401).json({ err: "This Profile is not a restaurant profile" })
     }
-  } catch (error) {
-    console.log(error)
-    res.json(error)
+  } catch(err) {
+    console.log(err)
+    res.json(err)
   }
 }
-
 
 async function index(req, res) {
   try {
     const restaurants = await Restaurant.find({}).populate(['dishes', 'owner']).sort({createdAt:'desc'})
     res.status(200).json(restaurants)
-  } catch (error) {
-    console.log(error)
-    res.status(500).json(error)
+  } catch(err) {
+    console.log(err)
+    res.status(500).json(err)
   }
 }
 
@@ -37,14 +36,12 @@ async function show(req, res) {
   try {
     const dishes = await Dish.find({})
     const restaurantDishes= dishes.filter(dish=> dish.restaurant?.equals(req.params.restaurantId))
-    req.body = {
-      dishes: restaurantDishes
-    }
+    req.body = {dishes: restaurantDishes}
     const restaurant = await Restaurant.findByIdAndUpdate(req.params.restaurantId,req.body,{new: true}).populate(['dishes', 'owner'])
     res.status(200).json(restaurant)
-  } catch (error) {
-    console.log(error)
-    res.status(500).json(error)
+  } catch (err) {
+    console.log(err)
+    res.status(500).json(err)
   }
 }
 
@@ -58,9 +55,9 @@ async function update(req, res) {
     }else{
       res.status(401).json({ err: "You are not the owner of this restaurant" })
     }
-  } catch (error) {
-    console.log(error)
-    res.status(500).json(error)
+  } catch(err) {
+    console.log(err)
+    res.status(500).json(err)
   }
 }
 
@@ -71,15 +68,14 @@ async function deleteRestaurant(req, res){
       await Restaurant.findByIdAndDelete(req.params.restaurantId)
       const profile = await Profile.findById(req.user.profile)
       profile.restaurant = null
-      // TODO delete restaurant's dishes
       await profile.save()
       res.status(200).json(restaurant)
     }else{
       res.status(401).json({ err: "You are not the owner of this restaurant" })
     }
-  }catch(error){
-    console.log(error)
-    res.status(500).json(error)
+  } catch(err){
+    console.log(err)
+    res.status(500).json(err)
   }
 }
 
@@ -87,16 +83,14 @@ async function addPhoto(req, res) {
   try {
     const imageFile = req.files.photo.path
     const restaurant = await Restaurant.findById(req.params.restaurantId)
-
     const image = await cloudinary.uploader.upload(
       imageFile, 
       { tags: `${req.params.restaurantId}` }
     )
     restaurant.photo = image.url
-    
     await restaurant.save()
     res.status(201).json(restaurant.photo)
-  } catch (err) {
+  } catch(err) {
     console.log(err)
     res.status(500).json(err)
   }
