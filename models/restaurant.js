@@ -1,7 +1,3 @@
-//this is the model for restaurant
-
-import { Profile } from './profile.js'
-import {Dish} from './dish.js'
 import mongoose from 'mongoose'
 
 const Schema = mongoose.Schema
@@ -18,7 +14,13 @@ const restaurantSchema = new Schema({
   cuisine:{
     type: String,
     required: true,
-    enum: [ "American", "Brazilian", "Caribbean", "Cajun and Creole", "Chinese", "Filipino", "French", "Greek", "Indian", "Italian", "Japanese", "Korean", "Lebanese", "Mediterranean", "Mexican", "Middle Eastern", "Peruvian", "Spanish", "Thai", "Vietnamese", "Other" ]
+    enum: [ "American", "Brazilian", "Caribbean",
+      "Cajun and Creole", "Chinese", "Filipino",
+      "French", "Greek", "Indian", "Italian",
+      "Japanese", "Korean", "Lebanese", "Mediterranean",
+      "Mexican", "Middle Eastern", "Peruvian", "Spanish",
+      "Thai", "Vietnamese", "Other"
+    ]
   },
   owner: { 
     type: Schema.Types.ObjectId, 
@@ -33,7 +35,7 @@ const restaurantSchema = new Schema({
     required:true
   },
   photo: String,
-  zipcode: Number
+  zipcode: Number,
 },{
   timestamps: true,
 })

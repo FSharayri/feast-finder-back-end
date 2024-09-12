@@ -3,7 +3,10 @@ import mongoose from 'mongoose'
 const Schema = mongoose.Schema
 
 const reviewSchema = new Schema({
-  owner: { type: Schema.Types.ObjectId, ref: 'Profile' },
+  owner: { 
+    type: Schema.Types.ObjectId,
+    ref: 'Profile'
+  },
   comment: String,
   rating: {
     type: Number,
@@ -17,7 +20,7 @@ const reviewSchema = new Schema({
 const dishSchema = new Schema({
   owner: { 
     type: Schema.Types.ObjectId, 
-    ref: 'Profile' 
+    ref: 'Profile'
   },
   name: {
     type: String,
