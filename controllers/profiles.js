@@ -1,16 +1,13 @@
 import { Profile } from '../models/profile.js'
 import { v2 as cloudinary } from 'cloudinary'
 
-
-
-
 async function show(req,res){
   try {
     const userProfile = await Profile.findById(req.user.profile).populate(['restaurant','dishesReviewed'])
     res.status(200).json(userProfile)
-  } catch (error) {
-    console.log(error)
-    res.status(500).json(error)
+  } catch (err) {
+    console.log(err)
+    res.status(500).json(err)
   }
 }
 
