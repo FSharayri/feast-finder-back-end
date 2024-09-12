@@ -16,9 +16,9 @@ async function create(req, res) {
     }else {
       res.status(401).json({ err: "This Profile is not a restaurant profile" })
     }
-  } catch(error) {
-    console.log(error)
-    res.json(error)
+  } catch(err) {
+    console.log(err)
+    res.json(err)
   }
 }
 
@@ -26,9 +26,9 @@ async function index(req, res) {
   try {
     const restaurants = await Restaurant.find({}).populate(['dishes', 'owner']).sort({createdAt:'desc'})
     res.status(200).json(restaurants)
-  } catch(error) {
-    console.log(error)
-    res.status(500).json(error)
+  } catch(err) {
+    console.log(err)
+    res.status(500).json(err)
   }
 }
 
@@ -39,9 +39,9 @@ async function show(req, res) {
     req.body = {dishes: restaurantDishes}
     const restaurant = await Restaurant.findByIdAndUpdate(req.params.restaurantId,req.body,{new: true}).populate(['dishes', 'owner'])
     res.status(200).json(restaurant)
-  } catch (error) {
-    console.log(error)
-    res.status(500).json(error)
+  } catch (err) {
+    console.log(err)
+    res.status(500).json(err)
   }
 }
 
@@ -55,9 +55,9 @@ async function update(req, res) {
     }else{
       res.status(401).json({ err: "You are not the owner of this restaurant" })
     }
-  } catch(error) {
-    console.log(error)
-    res.status(500).json(error)
+  } catch(err) {
+    console.log(err)
+    res.status(500).json(err)
   }
 }
 
@@ -73,9 +73,9 @@ async function deleteRestaurant(req, res){
     }else{
       res.status(401).json({ err: "You are not the owner of this restaurant" })
     }
-  } catch(error){
-    console.log(error)
-    res.status(500).json(error)
+  } catch(err){
+    console.log(err)
+    res.status(500).json(err)
   }
 }
 
